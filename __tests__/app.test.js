@@ -14,8 +14,8 @@ describe('app', () => {
     return request(app)
       .get('/api/invalidPath')
       .expect(404)
-      .then((res) => {
-        expect(res.body).toEqual({ msg: 'path not found' });
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe('path not found');
       });
   });
 
@@ -23,14 +23,14 @@ describe('app', () => {
     it('status: 200', () => {
       return request(app).get('/api/topics').expect(200);
     });
-    it('status:200, should return an array of topic objects', () => {
+    it('status:200, should return an object {"topic": array of topic objects}', () => {
       return request(app)
         .get('/api/topics')
         .expect(200)
-        .then((res) => {
-          expect(res.body).toHaveLength(3);
+        .then(({ body: { topics } }) => {
+          expect(topics).toHaveLength(3);
           expect(
-            res.body.forEach((topic) => {
+            topics.forEach((topic) => {
               expect.objectContaining({
                 description: expect.any(String),
                 slug: expect.any(String),
@@ -49,8 +49,7 @@ describe('app', () => {
       return request(app)
         .get('/api/articles/2')
         .expect(200)
-        .then((res) => {
-          const article = res.body;
+        .then(({ body: { article } }) => {
           expect(article).toEqual(
             expect.objectContaining({
               article_id: expect.any(Number),
@@ -68,20 +67,16 @@ describe('app', () => {
       return request(app)
         .get('/api/articles/9999')
         .expect(404)
-        .then((res) => {
-          expect(res.body).toEqual({
-            msg: 'No article found for article_id: 9999',
-          });
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('No article found for article_id: 9999');
         });
     });
     it('status: 400, responds with msg: "bad request" when passed an invalid id ', () => {
       return request(app)
         .get('/api/articles/notValidId')
         .expect(400)
-        .then((res) => {
-          expect(res.body).toEqual({
-            msg: 'Bad request',
-          });
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
         });
     });
   });

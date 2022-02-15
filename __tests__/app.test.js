@@ -94,8 +94,6 @@ describe('app', () => {
             users.forEach((user) => {
               expect.objectContaining({
                 username: expect.any(String),
-                name: expect.any(String),
-                avatar_url: expect.any(String),
               });
             })
           );

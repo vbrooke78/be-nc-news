@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const { getTopics } = require('./controllers/topics.controller');
 const { getArticlesById } = require('./controllers/articles.controller');
+const { getUsers } = require('./controllers/users.controller');
 const {
   handleCustomErrors,
   handlePsqlErrors,
@@ -11,6 +12,8 @@ const {
 app.get('/api/topics', getTopics);
 
 app.get('/api/articles/:article_id', getArticlesById);
+
+app.get('/api/users', getUsers);
 
 app.use(handleCustomErrors);
 

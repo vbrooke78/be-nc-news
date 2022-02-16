@@ -62,6 +62,14 @@ describe('app', () => {
           );
         });
     });
+    it('status: 200, updates article with comment_count property', () => {
+      return request(app)
+        .get('/api/articles/3')
+        .expect(200)
+        .then(({ body: { article } }) => {
+          expect(article.comment_count).toBe(2);
+        });
+    });
     it('status: 404, responds with msg: "article not found" when passed a valid but non-existent id ', () => {
       return request(app)
         .get('/api/articles/9999')

@@ -5,20 +5,25 @@ const { getUsers } = require('./controllers/users.controller');
 const {
   getArticlesById,
   patchArticleById,
+  getArticles,
 } = require('./controllers/articles.controller');
 const {
   handleCustomErrors,
   handlePsqlErrors,
   handleServerErrors,
 } = require('./controllers/errors.controller');
+
 app.use(express.json());
 
 app.get('/api/topics', getTopics);
 
 app.get('/api/articles/:article_id', getArticlesById);
 
-app.get('/api/users', getUsers);
 app.patch('/api/articles/:article_id', patchArticleById);
+
+app.get('/api/users', getUsers);
+
+app.get('/api/articles', getArticles);
 
 app.use(handleCustomErrors);
 

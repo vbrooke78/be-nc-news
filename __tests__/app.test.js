@@ -145,4 +145,38 @@ describe('app', () => {
         });
     });
   });
+
+  describe('GET /api/articles', () => {
+    it('status: 200', () => {
+      return request(app).get('/api/articles').expect(200);
+    });
+    it('status: 200, should return an object {articles: array of articles objects', () => {
+      return request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).toHaveLength(12);
+          expect(
+            articles.forEach((article) => {
+              expect.objectContaining({
+                author: expect.any(String),
+                title: expect.any(String),
+                article_id: expect.any(Number),
+                topic: expect.any(String),
+                created_at: expect.any(String),
+                votes: expect.any(Number),
+              });
+            })
+          );
+        });
+    });
+    it('status: 200, articles should be sorted by date in descending order', () => {
+      return request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).toBeSortedBy('created_at', { descending: true });
+        });
+    });
+  });
 });

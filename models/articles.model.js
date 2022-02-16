@@ -32,3 +32,11 @@ exports.updateArticleById = (articleId, newVote) => {
     return Promise.reject({ status: 400, msg: 'Bad request' });
   }
 };
+
+exports.fetchArticles = () => {
+  return db
+    .query('SELECT * FROM articles ORDER BY created_at desc ;')
+    .then(({ rows }) => {
+      return rows;
+    });
+};

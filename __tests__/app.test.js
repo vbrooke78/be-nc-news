@@ -186,5 +186,19 @@ describe('app', () => {
           expect(articles).toBeSortedBy('created_at', { descending: true });
         });
     });
+    it('status: 200, updates articles with comment_count property', () => {
+      return request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          articles.forEach((article) => {
+            expect(article).toEqual(
+              expect.objectContaining({
+                comment_count: expect.any(Number),
+              })
+            );
+          });
+        });
+    });
   });
 });

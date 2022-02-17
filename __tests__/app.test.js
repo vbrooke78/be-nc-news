@@ -232,7 +232,6 @@ describe('app', () => {
         .get('/api/articles/2/comments')
         .expect(200)
         .then(({ body: { comments } }) => {
-          console.log(comments, 'test');
           expect(comments).toEqual([]);
         });
     });

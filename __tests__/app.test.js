@@ -239,10 +239,9 @@ describe('app', () => {
         .post('/api/articles/2/comments')
         .send(newComment)
         .expect(201)
-        .then(({ body: { newComment } }) => {
-          console.log(newComment, 'test');
-          expect(newComment.author).toBe('rogersop');
-          expect(newComment.body).toBe(
+        .then(({ body: { comment } }) => {
+          expect(comment.author).toBe('rogersop');
+          expect(comment.body).toBe(
             'An SQL query walks into a bar, walks up to two tables and asks "Can I join you?"'
           );
         });

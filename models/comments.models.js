@@ -17,8 +17,8 @@ exports.fetchComments = (articleId) => {
 };
 
 exports.insertComment = (comment, articleID) => {
-  // return checkUserExists(comment.username).then(() => {
   const { username, body } = comment;
+
   if (comment.hasOwnProperty('username') && comment.hasOwnProperty('body')) {
     return checkUserExists(comment.username).then(() => {
       return db

@@ -16,8 +16,8 @@ exports.postComment = (req, res, next) => {
   const username = req.body.username;
 
   insertComment(comment, articleID)
-    .then((newComment) => {
-      res.status(201).send({ newComment });
+    .then((comment) => {
+      res.status(201).send({ comment });
     })
     .catch(next);
 };

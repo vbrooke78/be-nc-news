@@ -7,7 +7,10 @@ const {
   patchArticleById,
   getArticles,
 } = require('./controllers/articles.controller');
-const { getComments } = require('./controllers/comments.controller');
+const {
+  getComments,
+  postComment,
+} = require('./controllers/comments.controller');
 const {
   handleCustomErrors,
   handlePsqlErrors,
@@ -21,6 +24,7 @@ app.patch('/api/articles/:article_id', patchArticleById);
 app.get('/api/users', getUsers);
 app.get('/api/articles', getArticles);
 app.get('/api/articles/:article_id/comments', getComments);
+app.post('/api/articles/:article_id/comments', postComment);
 
 //Error handling
 app.use(handleCustomErrors);

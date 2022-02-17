@@ -187,4 +187,45 @@ describe('app', () => {
         });
     });
   });
+
+  describe('GET /api/articles/:article_id/comments', () => {
+    it('status: 200', () => {
+      return request(app).get('/api/articles/3/comments').expect(200);
+    });
+    it('status: 200, should return an object {"comments": array of comment objects}', () => {
+      return request(app)
+        .get('/api/articles/3/comments')
+        .expect(200)
+        .then(({ body: { comments } }) => {
+          expect(comments).toHaveLength(2);
+          expect(
+            comments.forEach((comment) => {
+              expect.objectContaining({
+                comment_id: expect.any(Number),
+                votes: expect.any(Number),
+                created_at: expect.any(String),
+                author: expect.any(String),
+                body: expect.any(String),
+              });
+            })
+          );
+        });
+    });
+    it('status: 404, responds with msg: "article_id not found" when passed a valid but non-existent id ', () => {
+      return request(app)
+        .get('/api/articles/9999/comments')
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('No such article_id: 9999');
+        });
+    });
+    it('status: 400, responds with msg: "bad request" when passed an invalid id ', () => {
+      return request(app)
+        .get('/api/articles/notValidId/comments')
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
+        });
+    });
+  });
 });

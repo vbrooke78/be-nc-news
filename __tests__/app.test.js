@@ -250,4 +250,46 @@ describe('app', () => {
         });
     });
   });
+
+  describe('POST /api/articles/:article_id/comments', () => {
+    it('status: 201, responds with posted comment', () => {
+      const newComment = {
+        username: 'rogersop',
+        body: 'An SQL query walks into a bar, walks up to two tables and asks "Can I join you?"',
+      };
+      return request(app)
+        .post('/api/articles/2/comments')
+        .send(newComment)
+        .expect(201)
+        .then(({ body: { comment } }) => {
+          expect(comment.author).toBe('rogersop');
+          expect(comment.body).toBe(
+            'An SQL query walks into a bar, walks up to two tables and asks "Can I join you?"'
+          );
+        });
+    });
+    it('status: 400, should respond with message: "bad request" when body malformed or missing required fields', () => {
+      const newComment = {};
+      return request(app)
+        .post('/api/articles/2/comments')
+        .send(newComment)
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
+        });
+    });
+    it('status: 404 should respond with message: "No such username" when body contains unknown user', () => {
+      const newComment = {
+        username: 123,
+        body: 'An SQL query walks into a bar, walks up to two tables and asks "Can I join you?"',
+      };
+      return request(app)
+        .post('/api/articles/2/comments')
+        .send(newComment)
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('No such username: 123');
+        });
+    });
+  });
 });

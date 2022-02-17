@@ -227,5 +227,14 @@ describe('app', () => {
           expect(msg).toBe('Bad request');
         });
     });
+    it('status: 200, responds with empty array when article has no associated comments', () => {
+      return request(app)
+        .get('/api/articles/2/comments')
+        .expect(200)
+        .then(({ body: { comments } }) => {
+          console.log(comments, 'test');
+          expect(comments).toEqual([]);
+        });
+    });
   });
 });

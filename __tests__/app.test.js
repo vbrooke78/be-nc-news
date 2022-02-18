@@ -200,6 +200,67 @@ describe('app', () => {
           });
         });
     });
+    it('status: 200, allow sort_by queries - defaults to date', () => {
+      return request(app)
+        .get('/api/articles?sort_by=author')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).toBeSortedBy('author', { descending: true });
+        });
+    });
+    it('status: 400, returns Invalid sort_by query when passed an invalid sort_by', () => {
+      return request(app)
+        .get('/api/articles?sort_by=invalidSort_by')
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Invalid sort_by query');
+        });
+    });
+    it('status: 200, allow order by asc or desc queries - defaults to desc', () => {
+      return request(app)
+        .get('/api/articles?sort_by=author&order=asc')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).toBeSortedBy('author');
+        });
+    });
+    it('status: 400, returns Invalid order query when passed an invalid order', () => {
+      return request(app)
+        .get('/api/articles?order=invalidOrder')
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Invalid order query');
+        });
+    });
+    it('status: 200, allow user to filter by topic', () => {
+      return request(app)
+        .get('/api/articles?topic=cats  ')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).toHaveLength(1);
+          expect(
+            articles.forEach((article) => {
+              expect.objectContaining({ topic: 'cats' });
+            })
+          );
+        });
+    });
+    it('status: 200, returns empty array when topic has no associated articles', () => {
+      return request(app)
+        .get('/api/articles?topic=paper')
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).toEqual([]);
+        });
+    });
+    it('status: 404, returns topic not found query when passed an invalid topic', () => {
+      return request(app)
+        .get('/api/articles?topic=invalidTopic')
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Topic not found: invalidTopic');
+        });
+    });
   });
 
   describe('GET /api/articles/:article_id/comments', () => {

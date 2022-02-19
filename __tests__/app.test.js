@@ -354,7 +354,6 @@ describe('app', () => {
     });
   });
 
-
   describe('GET /api', () => {
     it('should respond with a JSON describing all the available endpoints on your API ', () => {
       return request(app)
@@ -362,8 +361,10 @@ describe('app', () => {
         .expect(200)
         .then(({ text }) => {
           expect(text).toBeJSON();
+        });
+    });
   });
-});
+
   describe('DELETE /api/comments/:comment_id', () => {
     it('status: 204 ', () => {
       return request(app).delete('/api/comments/2').expect(204);
@@ -388,4 +389,5 @@ describe('app', () => {
           expect(msg).toBe('Bad request');
         });
     });
-
+  });
+});

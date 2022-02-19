@@ -17,6 +17,7 @@ const {
   handlePsqlErrors,
   handleServerErrors,
 } = require('./controllers/errors.controller');
+const { getApi } = require('./controllers/api.controller');
 
 app.use(express.json());
 app.get('/api/topics', getTopics);
@@ -27,6 +28,7 @@ app.get('/api/articles', getArticles);
 app.get('/api/articles/:article_id/comments', getComments);
 app.post('/api/articles/:article_id/comments', postComment);
 app.delete('/api/comments/:comment_id', deleteCommentByCommentId);
+app.get('/api', getApi);
 
 //Error handling
 app.use(handleCustomErrors);

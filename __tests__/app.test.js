@@ -353,4 +353,30 @@ describe('app', () => {
         });
     });
   });
+
+  describe('DELETE /api/comments/:comment_id', () => {
+    it('status: 204 ', () => {
+      return request(app).delete('/api/comments/2').expect(204);
+    });
+    it('status: 204 should remove comment from database', async () => {
+      await request(app).delete('/api/comments/2').expect(204);
+      await request(app).get('/api/comments/2').expect(404);
+    });
+    it('status: 404, responds with msg: "comment not found" when passed a valid but non-existent id ', () => {
+      return request(app)
+        .delete('/api/comments/9999')
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('No comment found for comment_id: 9999');
+        });
+    });
+    it('status: 400, responds with msg: "bad request" when passed an invalid id ', () => {
+      return request(app)
+        .delete('/api/comments/notValidId')
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
+        });
+    });
+  });
 });

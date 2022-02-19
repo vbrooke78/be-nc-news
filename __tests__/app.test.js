@@ -353,4 +353,15 @@ describe('app', () => {
         });
     });
   });
+
+  describe('GET /api', () => {
+    it('should respond with a JSON describing all the available endpoints on your API ', () => {
+      return request(app)
+        .get('/api')
+        .expect(200)
+        .then(({ text }) => {
+          expect(text).toBeJSON();
+        });
+    });
+  });
 });

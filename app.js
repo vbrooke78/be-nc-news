@@ -10,6 +10,7 @@ const {
 const {
   getComments,
   postComment,
+  deleteCommentByCommentId,
 } = require('./controllers/comments.controller');
 const {
   handleCustomErrors,
@@ -26,6 +27,7 @@ app.get('/api/users', getUsers);
 app.get('/api/articles', getArticles);
 app.get('/api/articles/:article_id/comments', getComments);
 app.post('/api/articles/:article_id/comments', postComment);
+app.delete('/api/comments/:comment_id', deleteCommentByCommentId);
 app.get('/api', getApi);
 
 //Error handling

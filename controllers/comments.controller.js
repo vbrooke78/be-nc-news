@@ -1,6 +1,13 @@
-const { fetchComments, insertComment } = require('../models/comments.models');
-const { checkUserExists } = require('../models/util.functions');
-// const { fetchComments } = require('../models/comments.models');
+const {
+  fetchComments,
+  insertComment,
+  removeCommentByCommentId,
+} = require('../models/comments.models');
+const {
+  checkUserExists,
+  checkCommentExists,
+} = require('../models/util.functions');
+
 const { checkArticleExists } = require('../models/articles.model');
 
 exports.getComments = (req, res, next) => {
@@ -21,6 +28,19 @@ exports.postComment = (req, res, next) => {
   insertComment(comment, articleID)
     .then((comment) => {
       res.status(201).send({ comment });
+    })
+    .catch(next);
+};
+
+exports.deleteCommentByCommentId = (req, res, next) => {
+  const { comment_id: commentId } = req.params;
+
+  Promise.all([
+    checkCommentExists(commentId),
+    removeCommentByCommentId(commentId),
+  ])
+    .then(() => {
+      res.status(204).send();
     })
     .catch(next);
 };

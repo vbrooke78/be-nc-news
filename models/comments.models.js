@@ -1,8 +1,5 @@
 const db = require('../db/connection');
-const {
-  checkUserExists,
-  checkCommentExists,
-} = require('../models/util.functions');
+const { checkUserExists } = require('../models/util.functions');
 
 exports.fetchComments = (articleId) => {
   return db

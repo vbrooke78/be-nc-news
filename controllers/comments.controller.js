@@ -4,11 +4,9 @@ const {
   removeCommentByCommentId,
 } = require('../models/comments.models');
 const {
-  checkUserExists,
+  checkArticleExists,
   checkCommentExists,
 } = require('../models/util.functions');
-
-const { checkArticleExists } = require('../models/articles.model');
 
 exports.getComments = (req, res, next) => {
   const { article_id: articleId } = req.params;

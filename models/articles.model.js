@@ -1,5 +1,5 @@
 const db = require('../db/connection');
-const { checkTopicExists } = require('./topics.model');
+const { checkItemExists } = require('./util.functions');
 
 exports.fetchArticlesById = (id) => {
   return db
@@ -72,7 +72,7 @@ exports.fetchArticles = async (
 
   const { rows } = await db.query(queryStr, queryValues);
   if (rows.length === 0) {
-    await checkTopicExists(topic);
+    await checkItemExists('topics', 'slug', topic);
   }
 
   return rows;

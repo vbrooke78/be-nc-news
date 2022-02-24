@@ -258,7 +258,7 @@ describe('app', () => {
         .get('/api/articles?topic=invalidTopic')
         .expect(404)
         .then(({ body: { msg } }) => {
-          expect(msg).toBe('Topic not found: invalidTopic');
+          expect(msg).toBe('No data found for invalidTopic');
         });
     });
   });
@@ -291,7 +291,7 @@ describe('app', () => {
         .get('/api/articles/9999/comments')
         .expect(404)
         .then(({ body: { msg } }) => {
-          expect(msg).toBe('No such article_id: 9999');
+          expect(msg).toBe('No data found for 9999');
         });
     });
     it('status: 400, responds with msg: "bad request" when passed an invalid id ', () => {
@@ -349,7 +349,7 @@ describe('app', () => {
         .send(newComment)
         .expect(404)
         .then(({ body: { msg } }) => {
-          expect(msg).toBe('No such username: 123');
+          expect(msg).toBe('No data found for 123');
         });
     });
   });
@@ -378,7 +378,7 @@ describe('app', () => {
         .delete('/api/comments/9999')
         .expect(404)
         .then(({ body: { msg } }) => {
-          expect(msg).toBe('No comment found for comment_id: 9999');
+          expect(msg).toBe('No data found for 9999');
         });
     });
     it('status: 400, responds with msg: "bad request" when passed an invalid id ', () => {

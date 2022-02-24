@@ -1,5 +1,5 @@
 const db = require('../db/connection');
-const { checkUserExists } = require('../models/util.functions');
+const { checkItemExists } = require('../models/util.functions');
 
 exports.fetchComments = (articleId) => {
   return db
@@ -13,7 +13,7 @@ exports.insertComment = (comment, articleID) => {
   const { username, body } = comment;
 
   if (comment.hasOwnProperty('username') && comment.hasOwnProperty('body')) {
-    return checkUserExists(comment.username).then(() => {
+    return checkItemExists('users', 'username', comment.username).then(() => {
       return db
         .query(
           'INSERT INTO comments (author, body, article_id) VALUES ($1, $2, $3) RETURNING *;',

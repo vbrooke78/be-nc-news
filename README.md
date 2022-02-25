@@ -1,17 +1,17 @@
-LINK TO HOSTED VERSION
+**LINK TO HOSTED VERSION**
 
-https://vbnews.herokuapp.com/
+https://vbnews.herokuapp.com/api
 
-PROJECT SUMMARY
+**PROJECT SUMMARY**
 
 The aim of this back-end project was to create an Express server with API endpoints that interact with a PSQL database.
 node-postgres was used to connect to the database.
 The models query and deal with the data, while the controllers focus on error handling client's requests.
 
-Node.js v16.13.0
+Node.js v16.13.0\*\*\*\*
 Postgres v14.1
 
-INSTRUCTIONS
+**INSTRUCTIONS**
 
 Step 1 - How to clone this repo:
 

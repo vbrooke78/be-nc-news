@@ -477,7 +477,6 @@ describe('app', () => {
         .send(newArticle)
         .expect(201)
         .then(({ body: { newArticle } }) => {
-          console.log(newArticle);
           expect(newArticle.author).toBe('butter_bridge');
           expect(newArticle.title).toBe('Hello');
           expect(newArticle.body).toBe('This is a new article');

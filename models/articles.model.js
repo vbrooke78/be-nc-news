@@ -77,3 +77,25 @@ exports.fetchArticles = async (
 
   return rows;
 };
+
+exports.createArticle = (newArticle) => {
+  const { author, title, body, topic } = newArticle;
+
+  if (
+    newArticle.hasOwnProperty('author') &&
+    newArticle.hasOwnProperty('title') &&
+    newArticle.hasOwnProperty('body') &&
+    newArticle.hasOwnProperty('topic')
+  ) {
+    return db
+      .query(
+        'INSERT INTO articles (author, title, body, topic) VALUES ($1, $2, $3, $4) RETURNING *;',
+        [author, title, body, topic]
+      )
+      .then(({ rows }) => {
+        return rows[0];
+      });
+  } else {
+    return Promise.reject({ status: 400, msg: 'Required information missing' });
+  }
+};

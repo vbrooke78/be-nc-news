@@ -2,6 +2,7 @@ const {
   fetchComments,
   insertComment,
   removeCommentByCommentId,
+  updateCommentByCommentId,
 } = require('../models/comments.models');
 const { checkItemExists } = require('../models/util.functions');
 
@@ -39,6 +40,16 @@ exports.deleteCommentByCommentId = (req, res, next) => {
   ])
     .then(() => {
       res.status(204).send();
+    })
+    .catch(next);
+};
+
+exports.patchCommentByCommentId = (req, res, next) => {
+  const { comment_id: commentId } = req.params;
+  const newVote = req.body;
+  updateCommentByCommentId(commentId, newVote)
+    .then((updatedComment) => {
+      res.status(200).send({ updatedComment });
     })
     .catch(next);
 };

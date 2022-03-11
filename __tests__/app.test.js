@@ -417,4 +417,49 @@ describe('app', () => {
         });
     });
   });
+
+  describe('PATCH /api/comments/:comment_id', () => {
+    it('status: 200, respond with updated vote value in object {updatedComment: {updatedComment} when passed a positive number', () => {
+      const commentUpdates = { inc_votes: 5 };
+      return request(app)
+        .patch('/api/comments/1')
+        .send(commentUpdates)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.updatedComment.comment_id).toBe(1);
+          expect(body.updatedComment.votes).toBe(21);
+        });
+    });
+    it('status: 200, respond with updated vote value in object {updatedComment: {updatedComment} when passed a negative number', () => {
+      const commentUpdates = { inc_votes: -5 };
+      return request(app)
+        .patch('/api/comments/3')
+        .send(commentUpdates)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.updatedComment.comment_id).toBe(3);
+          expect(body.updatedComment.votes).toBe(95);
+        });
+    });
+    it('status: 400 should respond with message: "bad request" when body malformed or missing required fields', () => {
+      const commentUpdates = {};
+      return request(app)
+        .patch('/api/comments/5')
+        .send(commentUpdates)
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
+        });
+    });
+    it('status: 400 should respond with message: "bad request" when body contains incorrect type', () => {
+      const commentUpdates = { inc_votes: 'string' };
+      return request(app)
+        .patch('/api/comments/5')
+        .send(commentUpdates)
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
+        });
+    });
+  });
 });

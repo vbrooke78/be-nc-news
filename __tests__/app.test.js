@@ -390,4 +390,31 @@ describe('app', () => {
         });
     });
   });
+
+  describe('GET /api/users/:username', () => {
+    it('status: 200', () => {
+      return request(app).get('/api/users/butter_bridge').expect(200);
+    });
+    it('status: 200, should return an object {user: {username: string, avatar_url: string, name: string}}', () => {
+      return request(app)
+        .get('/api/users/butter_bridge')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.user).toEqual({
+            username: 'butter_bridge',
+            name: 'jonny',
+            avatar_url:
+              'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg',
+          });
+        });
+    });
+    it('status: 404, responds with msg: "username not found" when passed a valid but non-existent id ', () => {
+      return request(app)
+        .get('/api/users/butterbridge')
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('No user found for username: butterbridge');
+        });
+    });
+  });
 });

@@ -462,4 +462,42 @@ describe('app', () => {
         });
     });
   });
+
+  describe('POST /api/articles', () => {
+    it('status: 201, responds with new article object', () => {
+      const newArticle = {
+        author: 'butter_bridge',
+        title: 'Hello',
+        body: 'This is a new article',
+        topic: 'paper',
+      };
+
+      return request(app)
+        .post('/api/articles')
+        .send(newArticle)
+        .expect(201)
+        .then(({ body: { newArticle } }) => {
+          console.log(newArticle);
+          expect(newArticle.author).toBe('butter_bridge');
+          expect(newArticle.title).toBe('Hello');
+          expect(newArticle.body).toBe('This is a new article');
+          expect(newArticle.topic).toBe('paper');
+        });
+    });
+    it('status 400, responds with "Required information missing" message if required property is missing in request body', () => {
+      const newArticle = {
+        author: 'butter_bridge',
+        body: 'This is a new article',
+        topic: 'paper',
+      };
+
+      return request(app)
+        .post('/api/articles')
+        .send(newArticle)
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Required information missing');
+        });
+    });
+  });
 });

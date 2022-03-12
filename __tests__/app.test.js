@@ -499,4 +499,34 @@ describe('app', () => {
         });
     });
   });
+
+  describe('POST /api/topics', () => {
+    it('status: 201, should return topic object containing newly added topic', () => {
+      const newTopic = {
+        slug: 'topic name',
+        description: 'description here',
+      };
+      return request(app)
+        .post('/api/topics')
+        .send(newTopic)
+        .expect(201)
+        .then(({ body: { topic } }) => {
+          expect(topic.slug).toBe('topic name');
+          expect(topic.description).toBe('description here');
+        });
+    });
+    it('status 400, responds with "Required information missing" message if required property is missing in request body', () => {
+      const newTopic = {
+        slug: 'new topic',
+      };
+
+      return request(app)
+        .post('/api/topics')
+        .send(newTopic)
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Required information missing');
+        });
+    });
+  });
 });

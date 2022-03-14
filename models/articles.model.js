@@ -99,3 +99,7 @@ exports.createArticle = (newArticle) => {
     return Promise.reject({ status: 400, msg: 'Required information missing' });
   }
 };
+
+exports.removeArticleById = (articleId) => {
+  return db.query('DELETE FROM articles WHERE article_id = $1;', [articleId]);
+};

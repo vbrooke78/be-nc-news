@@ -529,4 +529,30 @@ describe('app', () => {
         });
     });
   });
+
+  describe('DELETE /api/articles/:article_id', () => {
+    it('status 204, returns no content', () => {
+      return request(app).delete('/api/articles/2').expect(204);
+    });
+    it('status: 204 should remove comment from database', async () => {
+      await request(app).delete('/api/articles/2').expect(204);
+      await request(app).get('/api/articles/2').expect(404);
+    });
+    it('status: 404, responds with msg: "comment not found" when passed a valid but non-existent id ', () => {
+      return request(app)
+        .delete('/api/articles/9999')
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('No data found for 9999');
+        });
+    });
+    it('status: 400, responds with msg: "bad request" when passed an invalid id ', () => {
+      return request(app)
+        .delete('/api/articles/notValidId')
+        .expect(400)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe('Bad request');
+        });
+    });
+  });
 });

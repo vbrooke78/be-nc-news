@@ -64,11 +64,24 @@
       ]
     }
   },
+  "GET /api/users/:username": {
+    "description": "serves an array of a single user requested by user_id",
+    "queries": [],
+    "exampleResponse": {
+      "user": [
+        {
+          "username": "tickle122",
+          "avatar_url": "https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953",
+          "name": "Tom Tickle"
+        }
+      ]
+    }
+  },
   "PATCH /api/articles/:article_id": {
     "description": "accepts an object in the form of { inc_votes: newVote }, serves an array of the article with  votes property updated",
     "queries": [],
     "exampleResponse": {
-      "comments": [
+      "updatedArticle": [
         {
           "title": "Seafood substitutions are increasing",
           "topic": "cooking",
@@ -80,6 +93,7 @@
       ]
     }
   },
+
   "POST /api/articles/:article_id/comments": {
     "description": "accepts and object with username and body properties, serves an array of the posted comment",
     "queries": [],

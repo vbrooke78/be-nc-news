@@ -112,7 +112,7 @@
     "description": "accepts and object with username and body properties, serves an array of the posted comment",
     "queries": [],
     "exampleResponse": {
-      "comments": [
+      "newComment": [
         {
           "body": "git push origin master",
           "votes": 0,

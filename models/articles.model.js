@@ -47,7 +47,14 @@ exports.fetchArticles = async (
   order = 'desc',
   topic
 ) => {
-  const validSortBys = ['title', 'author', 'votes', 'article_id', 'created_at'];
+  const validSortBys = [
+    'title',
+    'author',
+    'votes',
+    'article_id',
+    'created_at',
+    'comment_count',
+  ];
   const validOrders = ['asc', 'desc'];
   const queryValues = [];
   let queryStr = `SELECT articles.author, articles.title, articles.article_id, articles.topic, articles.created_at, articles.votes, COUNT(comments.comment_id)::int 

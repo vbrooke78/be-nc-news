@@ -1,21 +1,21 @@
-# BACK END PROJECT - NC NEWS
+# Back end project - NC NEWS
 
 The aim of this back-end project was to create an Express server with API endpoints that interact with a PSQL database.
 node-postgres was used to connect to the database.
 The models query and deal with the data, while the controllers focus on error handling client's requests.
 
 
-# LINK TO HOSTED VERSION
+# Link to hosted version
 
 https://vbnews.herokuapp.com/api
 
-# TECH
+# Tech
 
 - Express
 - Node.js
 - postgreSQL
 
-# INSTRUCTIONS
+# Instructions
 
 - Fork this repo.
 
@@ -65,7 +65,7 @@ Run `run-seed.js` - seeds the database
 
 Run `jest` - tests with a (re-seeded) test database
 
-# MINIMUM REQUIREMENTS
+# Minimum requirements
 
 - Node.js v16.13.0
 - Postgres v14.1

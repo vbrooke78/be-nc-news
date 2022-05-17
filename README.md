@@ -60,7 +60,9 @@ Double check that these .env files are `.gitignored`.
 The scripts in package.json should do the following:
 
 Run `setup.sql` - drops and creates the databases
+
 Run `run-seed.js` - seeds the database
+
 Run `jest` - tests with a (re-seeded) test database
 
 # MINIMUM REQUIREMENTS
